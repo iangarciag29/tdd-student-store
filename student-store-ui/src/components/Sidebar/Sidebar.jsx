@@ -2,6 +2,9 @@ import SidebarLink from "./SidebarLink";
 import {HomeIcon} from "../../icons/Home";
 import {ShopIcon} from "../../icons/ShopIcon";
 import {DollarIcon} from "../../icons/DollarIcon";
+import {Alert, Tooltip} from "flowbite-react";
+import {InformationIcon} from "../../icons/InformationIcon";
+import useAppError from "../../Hooks/useAppError";
 
 const links = [
     {
@@ -25,6 +28,9 @@ const links = [
 ];
 
 const Sidebar = () => {
+
+    const {errors, removeError} = useAppError();
+
     return <div className="w-1/6 min-h-screen bg-slate-100 flex flex-col">
         <div className="h-[15%] grid items-center text-center">
             <a href="/" title="Student Store">
@@ -35,9 +41,31 @@ const Sidebar = () => {
             </a>
         </div>
         <hr className="mx-10"/>
-        <div className="h-[78%] flex flex-col space-y-4 py-10">
+        <div className="h-[40%] flex flex-col space-y-4 py-10">
             {links.map((link, idx) =>
                 <SidebarLink link={link} key={idx}/>
+            )}
+        </div>
+        <div className="h-[38%] flex flex-col space-y-5 overflow-y-auto px-2">
+            {errors?.map(error => <Alert
+                    color="failure"
+                    key={error.id}
+                    icon={InformationIcon}
+                    onDismiss={() => removeError(error.id)}
+                >
+                      <span>
+                    <span className="font-medium ml-2 inline-flex text-xs">
+                        <Tooltip content={<div className="flex flex-col text-xs space-y-2">
+                            <span><b>[DEBUG] </b>{`${error.code}`}</span>
+                            <span><b>[DEBUG] </b>{`${error.id}`}</span>
+                            <span><b>[DATE] </b>{`${error.date.toLocaleString()}`}</span>
+                        </div>}>
+                          ERROR {error.status} {error.fatal ? <span className="font-black text-xs">[FATAL]</span> : ""}
+                        </Tooltip>
+                        <p className="text-xs ml-2">{error.message}</p>
+                    </span>
+                  </span>
+                </Alert>
             )}
         </div>
         <div className="h-[7%] text-center grid items-center text-gray-500">
