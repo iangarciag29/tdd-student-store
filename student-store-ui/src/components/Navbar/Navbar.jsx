@@ -1,12 +1,15 @@
 import * as React from "react"
-import {Badge, Dropdown} from "flowbite-react";
+import {Badge, Dropdown, Tooltip} from "flowbite-react";
 import {DollarIcon} from "../../icons/DollarIcon";
 import {TrashIcon} from "../../icons/TrashIcon";
 import {PlusIcon} from "../../icons/PlusIcon";
 import {MinusIcon} from "../../icons/MinusIcon";
 import {Link} from "react-router-dom";
+import useShoppingCart from "../../Hooks/useShoppingCart";
 
 export default function Navbar() {
+
+    const {items, total, addItem, removeItem, deleteItem} = useShoppingCart();
 
     return (
         <nav className="navbar w-5/6 h-20 bg-gray-50 shadow flex flex-row-reverse px-10 justify-around fixed">
@@ -26,36 +29,48 @@ export default function Navbar() {
                           Shopping Cart
                         </span>
                     </Dropdown.Header>
-                    <Dropdown.Item>
+                    {items.length === 0 && <div className="px-10 py-5"><p>Your cart is empty!</p></div>}
+                    {items?.map(item => <Dropdown.Item key={item.id}>
                         <div className="flex flex-row space-x-20">
-                            <p>Rice Krispies</p>
+                            <p>{item.product.name}</p>
                             <div className="flex flex-row space-x-3">
                                 <Badge icon={MinusIcon}
-                                       class="bg-sky-200 rounded-full p-1 pt-1 text-sky-900 hover:bg-sky-800 hover:text-gray-50"/>
-                                <p>2</p>
+                                       class="bg-sky-200 rounded-full p-1 pt-1 text-sky-900 hover:bg-sky-800 hover:text-gray-50"
+                                       onClick={() => removeItem(item.id)}/>
+                                <p>{item.quantity}</p>
                                 <Badge icon={PlusIcon}
-                                       class="bg-sky-200 rounded-full px-1 pt-1 text-sky-900 hover:bg-sky-800 hover:text-gray-50"/>
+                                       class="bg-sky-200 rounded-full px-1 pt-1 text-sky-900 hover:bg-sky-800 hover:text-gray-50"
+                                       onClick={() => addItem(item.product)}
+                                />
                             </div>
-                            <Badge icon={TrashIcon}
+                            <div className="flex flex-row space-x-3">
+                                <Tooltip
+                                    content={`$${item.product.price} per unit`}
+                                    trigger="hover"
+                                >
+                                    <p>${item.product.price * item.quantity}</p>
+                                </Tooltip>
+                            </div>
+                            <Badge icon={TrashIcon} onClick={() => deleteItem(item.id)}
                                    class="bg-red-200 rounded-full px-1 pt-1 text-red-800 hover:bg-red-800 hover:text-gray-50"/>
                         </div>
-                    </Dropdown.Item>
+                    </Dropdown.Item>)}
                     <Dropdown.Divider/>
                     <Dropdown.Item>
                         <div className="flex flex-row justify-between">
                             <p className="font-bold">Total</p>
-                            <span>$0.00</span>
+                            <span>${parseFloat(total).toFixed(2)}</span>
                         </div>
-                    </Dropdown.Item
-                    ><Dropdown.Item>
-                    <div className="mx-auto text-center">
-                        <button
-                            className="bg-blue-900 px-8 py-1 text-xs text-gray-50 rounded-md inline-flex space-x-2 hover:bg-blue-800">
-                            <DollarIcon/>
-                            <Link to="/payment"><span>Go to Pay</span></Link>
-                        </button>
-                    </div>
-                </Dropdown.Item>
+                    </Dropdown.Item>
+                    {items.length !== 0 && <Dropdown.Item>
+                        <div className="mx-auto text-center">
+                            <button
+                                className="bg-blue-900 px-8 py-1 text-xs text-gray-50 rounded-md inline-flex space-x-2 hover:bg-blue-800">
+                                <DollarIcon/>
+                                <Link to="/payment"><span>Go to Pay</span></Link>
+                            </button>
+                        </div>
+                    </Dropdown.Item>}
                 </Dropdown>
 
             </div>
