@@ -3,7 +3,7 @@ import useAppError from "../../Hooks/useAppError";
 import { v4 as uuidv4} from "uuid";
 
 export const CartContext = createContext({
-    items: [],
+    cartItems: [],
     total: 0,
     quantity: 0,
     addItem: () => {
@@ -15,14 +15,14 @@ export const CartContext = createContext({
 });
 
 export const CartProvider = ({children}) => {
-    const [items, setItems] = useState([]);
+    const [cartItems, setCartItems] = useState([]);
     const [total, setTotal] = useState(0);
     const [quantity, setQuantity] = useState(0);
 
     const {addError} = useAppError();
 
     const removeItem = id => {
-        const item = items.filter(item => item.id === id);
+        const item = cartItems.filter(item => item.id === id);
         if (item.length !== 1) {
             addError("QUANTITY_MISMATCH", 500, "An error occurred.");
             return;
@@ -36,17 +36,19 @@ export const CartProvider = ({children}) => {
     }
 
     const addItem = product => {
-        const item = items.find(item => item.product.id === product.id)
+        console.log("cartItems", cartItems);
+        const item = cartItems.find(item => item.product.id === product.id)
         if (item) {
             // ALREADY EXISTS.
             console.log("STOP RIGHT THERE.")
+            return;
         } else {
             // DOES NOT EXIST AND SHOULD BE ADDED.
             console.log("ITEM DOES NOT EXIST AND IS BEING ADDED.")
             const id = uuidv4();
-            setItems(items => [...items, {
-                id,
-                product,
+            setCartItems(cartItems => [...cartItems, {
+                id: id,
+                product: product,
                 quantity: 1
             }]);
         }
@@ -55,7 +57,7 @@ export const CartProvider = ({children}) => {
     }
 
     const deleteItem = id => {
-        const item = items.find(item => item.id === id);
+        const item = cartItems.find(item => item.id === id);
         if (!item) {
             addError("ITEM_NOT_FOUND", 500, "Item couldn't be found.");
             return;
@@ -67,7 +69,7 @@ export const CartProvider = ({children}) => {
     }
 
     const contextValue = {
-        items,
+        cartItems,
         total,
         quantity,
         addItem: useCallback(product => addItem(product), []),
