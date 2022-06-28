@@ -21,7 +21,7 @@ const links = [
     },
     {
         id: 3,
-        name: "Payment",
+        name: "Checkout",
         route: "/payment",
         icon: DollarIcon
     }
