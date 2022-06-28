@@ -5,7 +5,7 @@ import Footer from "../Footer/Footer";
 import ToTopBtn from "../ToTop/ToTopBtn";
 import {Route, Routes} from "react-router-dom";
 import Landing from "../../pages/Landing";
-import Payment from "../../pages/Payment";
+import Checkout from "../../pages/Checkout";
 import Products from "../../pages/Products";
 import Product from "../../pages/Product";
 
@@ -18,7 +18,7 @@ export default function Home() {
                     <Route path="/" element={<Landing/>}/>
                     <Route path="/products" element={<Products/>}/>
                     <Route path="/product/:id" element={<Product/>}/>
-                    <Route path="/payment" element={<Payment/>}/>
+                    <Route path="/payment" element={<Checkout/>}/>
                 </Routes>
             </div>
             <Footer/>
