@@ -5,6 +5,7 @@ import {ListGroup} from "flowbite-react";
 import useAppError from "../Hooks/useAppError";
 import {Loader} from "../utils/Loader";
 import useShoppingCart from "../Hooks/useShoppingCart";
+import {Link} from "react-router-dom";
 
 const categories = [
     {
@@ -75,28 +76,29 @@ const Products = () => {
             </div>
             <div className="w-5/6 p-10 grid grid-cols-3 gap-5">
                 {products?.filter(product => (selectedCategory === "all" ? 1 : product.category === selectedCategory)).map(product =>
-                    <div className="max-w-sm bg-white rounded-lg shadow-md"
-                         key={product.id}>
-                        <img className="p-8 rounded-t-lg" src={product.image}
-                             alt={product.name}/>
-                        <div className="px-5 pb-5">
-                            <a href="#">
-                                <h5 className="text-xl font-semibold tracking-tight text-gray-900 dark:text-white">{product.name}</h5>
-                            </a>
-                            <div className="flex items-center mt-2.5 mb-5">
-                                <p>{product.description}</p>
-                            </div>
-                            <div className="flex justify-between items-center">
+                    <Link to={`/product/${product.id}`} key={product.id}>
+                        <div className="max-w-sm bg-white rounded-lg shadow-md">
+                            <img className="p-8 rounded-t-lg" src={product.image}
+                                 alt={product.name}/>
+                            <div className="px-5 pb-5">
+                                <a href="#">
+                                    <h5 className="text-xl font-semibold tracking-tight text-gray-900 dark:text-white">{product.name}</h5>
+                                </a>
+                                <div className="flex items-center mt-2.5 mb-5">
+                                    <p>{product.description}</p>
+                                </div>
+                                <div className="flex justify-between items-center">
                                 <span
                                     className="text-3xl font-bold text-gray-900 dark:text-white">${product.price}</span>
-                                <button
-                                    onClick={() => addItem(product)}
-                                    className="text-white bg-blue-900 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center">Add
-                                    to cart
-                                </button>
+                                    <button
+                                        onClick={() => addItem(product)}
+                                        className="text-white bg-blue-900 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center">Add
+                                        to cart
+                                    </button>
+                                </div>
                             </div>
                         </div>
-                    </div>
+                    </Link>
                 )}
             </div>
         </div>
