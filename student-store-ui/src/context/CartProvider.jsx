@@ -11,6 +11,8 @@ export const CartContext = createContext({
     removeItem: () => {
     },
     deleteItem: () => {
+    },
+    emptyCart: () => {
     }
 });
 
@@ -81,13 +83,21 @@ export const CartProvider = ({children}) => {
         setCartItems(items => items.filter(item => item.id !== id));
     }
 
+    const emptyCart = () => {
+        console.log("THE SHOPPING CART IS BEING EMPTIED.")
+        setTotal(0);
+        setCartItems([]);
+        setQuantity(0);
+    }
+
     const contextValue = {
         cartItems,
         total,
         quantity,
         addItem: useCallback(product => addItem(product), [cartItems]),
         removeItem: useCallback(id => removeItem(id), [cartItems]),
-        deleteItem: useCallback(id => deleteItem(id), [cartItems])
+        deleteItem: useCallback(id => deleteItem(id), [cartItems]),
+        setQuantity: useCallback(emptyCart, [])
     }
 
     return <CartContext.Provider value={contextValue}>
