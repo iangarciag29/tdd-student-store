@@ -5,7 +5,7 @@ import {TrashIcon} from "../../icons/TrashIcon";
 import {PlusIcon} from "../../icons/PlusIcon";
 import {MinusIcon} from "../../icons/MinusIcon";
 import {Link} from "react-router-dom";
-import useShoppingCart from "../../Hooks/useShoppingCart";
+import useShoppingCart from "../../hooks/useShoppingCart";
 
 export default function Navbar() {
 

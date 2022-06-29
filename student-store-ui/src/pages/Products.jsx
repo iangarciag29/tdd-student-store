@@ -2,9 +2,9 @@ import {useEffect, useState} from "react";
 import axios from "axios";
 import {API_URL} from "../api";
 import {ListGroup} from "flowbite-react";
-import useAppError from "../Hooks/useAppError";
+import useAppError from "../hooks/useAppError";
 import {Loader} from "../utils/Loader";
-import useShoppingCart from "../Hooks/useShoppingCart";
+import useShoppingCart from "../hooks/useShoppingCart";
 import {Link} from "react-router-dom";
 
 const categories = [

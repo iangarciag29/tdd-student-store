@@ -2,8 +2,8 @@ import * as React from "react"
 import Home from "../Home/Home"
 import {BrowserRouter} from "react-router-dom";
 import Sidebar from "../Sidebar/Sidebar";
-import {ErrorProvider} from "../Context/ErrorProvider";
-import {CartProvider} from "../Context/CartProvider";
+import {ErrorProvider} from "../../Context/ErrorProvider";
+import {CartProvider} from "../../Context/CartProvider";
 
 export default function App() {
     return (

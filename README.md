@@ -362,5 +362,5 @@ they way I was handling the provider did not allow me to add new items to the sh
 
 ### Shout out
 
-Give a shout out to somebody from your cohort that especially helped you during your project. This can be a fellow peer,
+Give a shout-out to somebody from your cohort that especially helped you during your project. This can be a fellow peer,
 instructor, TA, mentor, etc.

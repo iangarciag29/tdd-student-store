@@ -3,10 +3,12 @@ import axios from "axios";
 import {API_URL} from "../../api";
 import {Card} from "flowbite-react";
 import {Loader} from "../../utils/Loader";
-import useAppError from "../../Hooks/useAppError";
+import useAppError from "../../hooks/useAppError";
+import useShoppingCart from "../../hooks/useShoppingCart";
 
 const Products = () => {
     const {addError} = useAppError();
+    const {addItem} = useShoppingCart();
     const [isLoading, setIsLoading] = useState(true);
     const [products, setProducts] = useState([]);
 
@@ -48,12 +50,12 @@ const Products = () => {
                                   <span className="text-3xl font-bold text-gray-900 dark:text-white">
                                     ${product.price}
                                   </span>
-                            <a
-                                href=""
+                            <button
+                                onClick={() => addItem(product)}
                                 className="rounded-lg bg-blue-900 px-5 py-2 text-center text-sm font-medium text-white hover:bg-blue-800 focus:outline-none focus:ring-4 focus:ring-blue-300"
                             >
                                 Add to cart
-                            </a>
+                            </button>
                         </div>
                     </Card>
                 </div>

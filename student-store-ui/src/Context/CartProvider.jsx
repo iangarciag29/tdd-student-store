@@ -1,6 +1,6 @@
 import {createContext, useCallback, useState} from "react";
-import useAppError from "../../Hooks/useAppError";
-import { v4 as uuidv4} from "uuid";
+import useAppError from "../hooks/useAppError";
+import {v4 as uuidv4} from "uuid";
 
 export const CartContext = createContext({
     cartItems: [],
@@ -24,7 +24,7 @@ export const CartProvider = ({children}) => {
     const removeItem = id => {
         const item = cartItems.filter(item => item.id === id);
         if (item.length !== 1) {
-            addError("QUANTITY_MISMATCH", 500, "An error occurred.");
+            addError("QUANTITY_MISMATCH", 500, "Item doesn't exist in the shopping cart.");
             return;
         }
         if (item[0].quantity === 1) {
@@ -51,6 +51,7 @@ export const CartProvider = ({children}) => {
                 product: product,
                 quantity: 1
             }]);
+            console.log(cartItems)
         }
         setQuantity(quantity => quantity + 1);
         setTotal(total => total + product.price);
@@ -65,7 +66,7 @@ export const CartProvider = ({children}) => {
         const totalAmount = item.product.price * item.quantity;
         setQuantity(quantity => quantity - item.quantity);
         setTotal(total => total - totalAmount);
-        setItems(items => items.filter(item => item.id !== id));
+        setCartItems(items => items.filter(item => item.id !== id));
     }
 
     const contextValue = {

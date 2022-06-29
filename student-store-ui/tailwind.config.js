@@ -2,9 +2,8 @@
 module.exports = {
     content: [
         './index.html',
-        './src/components/*/*.{js,jsx}',
-        './src/icons/*/*.{js,jsx}',
-        './src/pages/*.{js,jsx}',
+        './src/*/*/*.{js,jsx}',
+        './src/*/*.{js,jsx}',
         'node_modules/flowbite-react/**/*.{js,jsx,ts,tsx}',
     ],
     theme: {

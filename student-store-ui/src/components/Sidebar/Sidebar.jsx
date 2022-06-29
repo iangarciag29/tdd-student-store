@@ -4,7 +4,7 @@ import {ShopIcon} from "../../icons/ShopIcon";
 import {DollarIcon} from "../../icons/DollarIcon";
 import {Alert, Tooltip} from "flowbite-react";
 import {InformationIcon} from "../../icons/InformationIcon";
-import useAppError from "../../Hooks/useAppError";
+import useAppError from "../../hooks/useAppError";
 
 const links = [
     {
