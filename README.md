@@ -285,11 +285,11 @@ The following specifications were met on the Express backend and the React front
 
 **Server** - Create an Express server
 
-- [ ] Wire up the appropriate middleware and error handlers in the `app.js` file
-- [ ] Create a single `GET` request handler at the `/` endpoint. It should respond to all `GET` requests with a JSON
+- [X] Wire up the appropriate middleware and error handlers in the `app.js` file
+- [X] Create a single `GET` request handler at the `/` endpoint. It should respond to all `GET` requests with a JSON
   object and a `200` status code. The JSON response should contain a single key of `ping` that stores the string
   value: `pong`. For example: `{ "ping": "pong" }`.
-- [ ] Have a `server.js` file that starts the app by listening on port `3001`.
+- [X] Have a `server.js` file that starts the app by listening on port `3001`.
 
 **Models** - The API should use a `Store` model that handles the following
 
