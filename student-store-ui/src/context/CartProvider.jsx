@@ -22,36 +22,48 @@ export const CartProvider = ({children}) => {
     const {addError} = useAppError();
 
     const removeItem = id => {
-        const item = cartItems.filter(item => item.id === id);
-        if (item.length !== 1) {
+        const item = cartItems.find(item => item.id === id);
+        if (!item) {
             addError("QUANTITY_MISMATCH", 500, "Item doesn't exist in the shopping cart.");
             return;
         }
-        if (item[0].quantity === 1) {
-            deleteItem(item[0].id);
+        if (item.quantity === 1) {
+            deleteItem(item.id);
             return;
+        } else {
+            let updatedCart = cartItems.map(cartItem => {
+                if (cartItem.id === item.id) {
+                    let prevItem = cartItem;
+                    prevItem.quantity--;
+                    return prevItem;
+                }
+                return cartItem;
+            })
+            setCartItems(updatedCart);
         }
         setQuantity(quantity => quantity - 1);
-        setTotal(total => total - item[0].product.price);
+        setTotal(total => total - item.product.price);
     }
 
     const addItem = product => {
-        console.log("cartItems", cartItems);
         const item = cartItems.find(item => item.product.id === product.id)
         if (item) {
-            // ALREADY EXISTS.
-            console.log("STOP RIGHT THERE.")
-            return;
+            let updatedCart = cartItems.map(cartItem => {
+                if (cartItem.id === item.id) {
+                    let prevItem = cartItem;
+                    prevItem.quantity++;
+                    return prevItem;
+                }
+                return cartItem;
+            })
+            setCartItems(updatedCart);
         } else {
-            // DOES NOT EXIST AND SHOULD BE ADDED.
-            console.log("ITEM DOES NOT EXIST AND IS BEING ADDED.")
             const id = uuidv4();
             setCartItems(cartItems => [...cartItems, {
-                id: id,
-                product: product,
+                id,
+                product,
                 quantity: 1
             }]);
-            console.log(cartItems)
         }
         setQuantity(quantity => quantity + 1);
         setTotal(total => total + product.price);
@@ -73,9 +85,9 @@ export const CartProvider = ({children}) => {
         cartItems,
         total,
         quantity,
-        addItem: useCallback(product => addItem(product), []),
-        removeItem: useCallback(id => removeItem(id), []),
-        deleteItem: useCallback(id => deleteItem(id), [])
+        addItem: useCallback(product => addItem(product), [cartItems]),
+        removeItem: useCallback(id => removeItem(id), [cartItems]),
+        deleteItem: useCallback(id => deleteItem(id), [cartItems])
     }
 
     return <CartContext.Provider value={contextValue}>
