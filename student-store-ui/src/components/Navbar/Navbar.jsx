@@ -48,7 +48,7 @@ export default function Navbar() {
                                     content={`$${item.product.price} per unit`}
                                     trigger="hover"
                                 >
-                                    <p>${item.product.price * item.quantity}</p>
+                                    <p>${parseFloat(item.product.price * item.quantity).toFixed(2)}</p>
                                 </Tooltip>
                             </div>
                             <Badge icon={TrashIcon} onClick={() => deleteItem(item.id)}
