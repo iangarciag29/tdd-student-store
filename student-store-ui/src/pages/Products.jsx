@@ -1,11 +1,12 @@
 import {useEffect, useState} from "react";
 import axios from "axios";
 import {API_URL} from "../api";
-import {ListGroup} from "flowbite-react";
+import {ListGroup, Toast} from "flowbite-react";
 import useAppError from "../hooks/useAppError";
 import {Loader} from "../utils/Loader";
 import useShoppingCart from "../hooks/useShoppingCart";
-import {Link} from "react-router-dom";
+import ProductCard from "../components/cards/ProductCard";
+import {CheckIcon} from "../icons/CheckIcon";
 
 const categories = [
     {
@@ -37,6 +38,7 @@ const Products = () => {
     const [selectedCategory, setSelectedCategory] = useState("all");
     const [products, setProducts] = useState([]);
     const [isLoading, setIsLoading] = useState(true);
+    const [showToast, setShowToast] = useState(false);
 
     useEffect(() => {
         (async () => {
@@ -56,8 +58,20 @@ const Products = () => {
     </div>
 
     return <div className="container">
-        <div className="w-full pb-10 text-center">
+        <div className="w-full pb-10 text-center relative">
             <h1 className="font-bold text-2xl">Browse all of our products</h1>
+            <div className={`${showToast ? "block" : "hidden"} absolute right-10 top-0`}>
+                <Toast>
+                    <div
+                        className="inline-flex h-8 w-8 shrink-0 items-center justify-center rounded-lg bg-green-100 text-green-500 dark:bg-green-800 dark:text-green-200">
+                        <CheckIcon className="h-5 w-5"/>
+                    </div>
+                    <div className="ml-3 text-sm font-normal">
+                        Added item to shopping cart.
+                    </div>
+                    <Toast.Toggle/>
+                </Toast>
+            </div>
         </div>
         <div className="flex flex-row">
             <div className="w-1/6 p-5">
@@ -76,30 +90,7 @@ const Products = () => {
             </div>
             <div className="w-5/6 p-10 grid grid-cols-3 gap-5">
                 {products?.filter(product => (selectedCategory === "all" ? 1 : product.category === selectedCategory)).map(product =>
-                    <Link to={`/product/${product.id}`} key={product.id}>
-                        <div className="max-w-sm bg-white rounded-lg shadow-md">
-                            <img className="p-8 rounded-t-lg" src={product.image}
-                                 alt={product.name}/>
-                            <div className="px-5 pb-5">
-                                <a href="#">
-                                    <h5 className="text-xl font-semibold tracking-tight text-gray-900 dark:text-white">{product.name}</h5>
-                                </a>
-                                <div className="flex items-center mt-2.5 mb-5">
-                                    <p>{product.description}</p>
-                                </div>
-                                <div className="flex justify-between items-center">
-                                <span
-                                    className="text-3xl font-bold text-gray-900 dark:text-white">${product.price}</span>
-                                    <button
-                                        onClick={() => addItem(product)}
-                                        className="text-white bg-blue-900 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center">Add
-                                        to cart
-                                    </button>
-                                </div>
-                            </div>
-                        </div>
-                    </Link>
-                )}
+                    <ProductCard product={product} setShowToast={setShowToast} key={product.id}/>)}
             </div>
         </div>
     </div>

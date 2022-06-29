@@ -1,7 +1,7 @@
 import useShoppingCart from "../hooks/useShoppingCart";
 import {Link} from "react-router-dom";
 import {Button, Label, Modal, TextInput, Tooltip} from "flowbite-react";
-import {useEffect, useState} from "react";
+import {useState} from "react";
 
 const Checkout = () => {
 
@@ -9,10 +9,6 @@ const Checkout = () => {
     const [showModal, setShowModal] = useState(false);
     const [name, setName] = useState("");
     const [email, setEmail] = useState("");
-
-    useEffect(() => {
-        console.log(cartItems)
-    }, [cartItems]);
 
     if (cartItems.length === 0) return <div className="text-center p-20 flex flex-col space-y-10">
         <h4 className="font-bold text-3xl">You do not have any items in your cart.</h4>
