@@ -52,7 +52,7 @@ const Checkout = () => {
                                 </button>
                             </div>
                             <div className="grid items-center">
-                                <h4 className="text-2xl font-black">${item.product.price}</h4>
+                                <h4 className="text-2xl font-black">${parseFloat(item.product.price * item.quantity).toFixed(2)}</h4>
                             </div>
                         </div>
                     </div>)}
