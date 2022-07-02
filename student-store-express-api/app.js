@@ -1,35 +1,40 @@
 const express = require("express");
 const morgan = require("morgan");
-const bodyParser = require("body-parser");
 const cors = require("cors");
-const {NotFoundException} = require("./errors");
-
 const app = express();
+const { NotFoundError } = require("./utils/errors");
 
-app.use(bodyParser.json());
-app.use(morgan("dev"));
+app.use(morgan("tiny"))
+app.use(express.json());
 
-app.get('/', (req, res) => {
-    res.status(200).send({
-        "ping": "pong"
-    });
-});
+app.use(
+    cors()
+);
 
-app.use("/store", require("./routes/StoreRoutes"));
-app.use("/orders", require("./routes/OrderRoutes"));
+app.get("/", (_req, res) => {
+    res.status(200).json({
+        ping: "pong"
+    })
+})
 
+// Routes
+app.use("/store", require("./routes/store.routes"));
+app.use("/orders", require("./routes/order.routes"));
+
+// Error handlers
 app.use((req, res, next) => {
-    return next(new NotFoundException());
+    return next(new NotFoundError());
 });
 
-app.use((error, req, res, next) => {
-    const {status, message} = error;
-    const errorObj = {
-        status: status || 500,
-        message: message || "Something went wrong with the application."
-    }
-    res.status(status).send({
-        error: errorObj
+app.use((error, req, res) => {
+    const status = error.status || 500;
+    const message = error.message || "Something wen't wrong in the application";
+
+    return res.status(status).json({
+        error: {
+            status,
+            message
+        }
     });
 });
 
