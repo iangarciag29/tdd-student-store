@@ -5,6 +5,7 @@ import {DollarIcon} from "../../icons/DollarIcon";
 import {Alert, Tooltip} from "flowbite-react";
 import {InformationIcon} from "../../icons/InformationIcon";
 import useAppError from "../../hooks/useAppError";
+import {CardIcon} from "../../icons/CardIcon";
 
 const links = [
     {
@@ -18,9 +19,14 @@ const links = [
         name: "All products",
         route: "/products",
         icon: ShopIcon
+    }, {
+        id: 3,
+        name: "Orders",
+        route: "/orders",
+        icon: CardIcon
     },
     {
-        id: 3,
+        id: 4,
         name: "Checkout",
         route: "/payment",
         icon: DollarIcon
