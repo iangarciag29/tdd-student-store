@@ -1,1 +1,1 @@
-export const API_URL = "https://codepath-store-api.herokuapp.com/store";
+export const API_URL = "http://localhost:3001";
