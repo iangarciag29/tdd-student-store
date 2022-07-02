@@ -10,6 +10,28 @@ const Checkout = () => {
     const [name, setName] = useState("");
     const [email, setEmail] = useState("");
 
+    const handleFormSubmit = () => {
+        // TODO: Add API request to store Order.
+        // TODO: Implement orders UI in the main application.
+
+        alert(`Thank you ${name} for buying from us, we will send a confirmation email to ${email}!`);
+        setShowModal(false);
+        setName("");
+        setEmail("");
+
+        const data = {
+            "shoppingCart": cartItems.map(item => {
+                return {itemId: item.product.id, quantity: item.quantity}
+            }),
+            "user": {
+                name,
+                email
+            }
+        }
+
+        console.log("data", data);
+    }
+
     if (cartItems.length === 0) return <div className="text-center p-20 flex flex-col space-y-10">
         <h4 className="font-bold text-3xl">You do not have any items in your cart.</h4>
         <div>
@@ -114,12 +136,7 @@ const Checkout = () => {
             </Modal.Body>
             <Modal.Footer>
                 <Button
-                    onClick={() => {
-                        alert(`Thank you ${name} for buying from us, we will send a confirmation email to ${email}!`);
-                        setShowModal(false);
-                        setName("");
-                        setEmail("");
-                    }}>
+                    onClick={() => handleFormSubmit()}>
                     Pay ${total}
                 </Button>
                 <Button
