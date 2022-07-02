@@ -15,7 +15,7 @@ const Products = () => {
 
     useEffect(() => {
         (async () => {
-            await axios.get(API_URL).then(res => {
+            await axios.get(API_URL + "/store").then(res => {
                 setTimeout(() => {
                     setProducts(res.data.products.slice(0, 3));
                     setIsLoading(false);

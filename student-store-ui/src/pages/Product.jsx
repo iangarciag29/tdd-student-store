@@ -20,7 +20,7 @@ const Product = () => {
 
     useEffect(() => {
         (async () => {
-            await axios.get(API_URL + "/" + id).then(res => {
+            await axios.get(API_URL + "/store/" + id).then(res => {
                 setTimeout(() => {
                     setProduct(res.data.product);
                     setIsLoading(false);
